@@ -7,184 +7,189 @@
   <meta name="description" content="ניהול קריאות מונה חשמל ומים לבעלי נכסים — כל התהליך בוואטסאפ, אוטומטי לגמרי." />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --green: #217346;
-      --green-light: #2d9a5f;
-      --green-pale: #e8f4ec;
-      --text: #1a1a1a;
-      --muted: #555;
-      --border: #e0e0e0;
-      --radius: 14px;
+      --green: #1a8a45;
+      --green-btn: #22c55e;
+      --green-btn-hover: #16a34a;
+      --green-pale: #f0fdf4;
+      --green-pale2: #dcfce7;
+      --green-dark: #14532d;
+      --text: #111827;
+      --muted: #4b5563;
+      --border: #e5e7eb;
+      --radius: 16px;
     }
-
-    body {
-      font-family: -apple-system, 'Segoe UI', Arial, sans-serif;
-      color: var(--text);
-      background: #fff;
-      line-height: 1.6;
-      font-size: 16px;
-    }
-
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, 'Segoe UI', Arial, sans-serif; color: var(--text); background: #fff; line-height: 1.6; }
     a { color: inherit; text-decoration: none; }
 
     /* NAV */
     nav {
       position: sticky; top: 0; z-index: 100;
-      background: rgba(255,255,255,0.95);
-      backdrop-filter: blur(8px);
+      background: rgba(255,255,255,0.97); backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--border);
-      padding: 0 24px;
+      padding: 0 32px; height: 64px;
       display: flex; align-items: center; justify-content: space-between;
-      height: 60px;
     }
-    .nav-logo { font-size: 20px; font-weight: 700; color: var(--green); }
+    .nav-right { display: flex; align-items: center; gap: 32px; }
+    .nav-logo { font-size: 22px; font-weight: 800; color: var(--green); }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { font-size: 14px; color: var(--muted); font-weight: 500; transition: color 0.15s; }
+    .nav-links a:hover { color: var(--green); }
     .nav-cta {
-      background: var(--green); color: #fff;
-      padding: 8px 20px; border-radius: 100px;
-      font-size: 14px; font-weight: 600;
-      display: flex; align-items: center; gap: 6px;
+      background: var(--green-btn); color: #fff;
+      padding: 9px 22px; border-radius: 100px;
+      font-size: 14px; font-weight: 700;
     }
+    .nav-cta:hover { background: var(--green-btn-hover); }
+
+    /* BTN */
+    .btn-wa {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--green-btn); color: #fff;
+      padding: 14px 32px; border-radius: 100px;
+      font-size: 17px; font-weight: 700;
+      transition: background 0.15s, transform 0.15s;
+    }
+    .btn-wa:hover { background: var(--green-btn-hover); transform: translateY(-1px); }
+    .btn-wa svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
 
     /* HERO */
     .hero {
-      background: linear-gradient(160deg, var(--green-pale) 0%, #fff 60%);
-      padding: 80px 24px 60px;
-      text-align: center;
+      padding: 80px 40px 60px;
+      display: flex; align-items: center; justify-content: center;
+      gap: 60px; max-width: 1100px; margin: 0 auto;
+      position: relative;
     }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--green-pale); color: var(--green);
-      border: 1px solid #b5ddc5;
-      padding: 4px 14px; border-radius: 100px;
-      font-size: 13px; font-weight: 600; margin-bottom: 20px;
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: radial-gradient(circle, #d1fae5 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.5; z-index: -1;
     }
-    .hero h1 {
-      font-size: clamp(36px, 8vw, 64px);
-      font-weight: 800; line-height: 1.15;
-      color: var(--text); margin-bottom: 12px;
-    }
-    .hero h1 span { color: var(--green); }
-    .hero-slogan {
-      font-size: clamp(18px, 4vw, 26px);
-      color: var(--muted); margin-bottom: 36px;
-      font-weight: 400;
-    }
-    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn-primary {
-      background: var(--green); color: #fff;
-      padding: 14px 32px; border-radius: 100px;
-      font-size: 16px; font-weight: 700;
-      display: flex; align-items: center; gap: 8px;
-      box-shadow: 0 4px 16px rgba(33,115,70,0.3);
-      transition: transform 0.15s, box-shadow 0.15s;
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(33,115,70,0.4); }
-    .btn-secondary {
+    .hero-text { flex: 1; max-width: 480px; }
+    .hero-text h1 { font-size: clamp(36px, 5vw, 58px); font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+    .hero-text h1 em { color: var(--green); font-style: normal; }
+    .hero-slogan { font-size: clamp(18px, 3vw, 26px); color: var(--muted); margin-bottom: 32px; font-weight: 400; }
+    .hero-slogan strong { color: var(--green); font-weight: 700; }
+    .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
       background: #fff; color: var(--green);
       border: 2px solid var(--green);
-      padding: 14px 32px; border-radius: 100px;
+      padding: 12px 28px; border-radius: 100px;
       font-size: 16px; font-weight: 600;
     }
+    .hero-visual { flex: 1; display: flex; justify-content: center; position: relative; min-height: 480px; }
 
-    /* METER IMAGE */
-    .meter-preview {
-      max-width: 360px; margin: 48px auto 0;
-      border-radius: 20px; overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-      border: 1px solid var(--border);
+    /* PHONE MOCKUP */
+    .phone {
+      width: 220px; background: #111; border-radius: 36px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+      position: absolute; overflow: hidden;
+      border: 6px solid #1a1a1a;
     }
-    .meter-preview img { width: 100%; display: block; }
+    .phone-notch {
+      height: 28px; background: #111;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .phone-notch-bar { width: 80px; height: 8px; background: #222; border-radius: 4px; }
+    .phone-screen { background: #e5ddd5; min-height: 360px; padding: 8px; overflow: hidden; }
+    .phone-header { background: #075e54; padding: 8px 10px; display: flex; align-items: center; gap: 8px; margin: -8px -8px 8px; }
+    .phone-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--green-btn); display: flex; align-items: center; justify-content: center; font-size: 14px; color: #fff; font-weight: 700; flex-shrink: 0; }
+    .phone-header-name { color: #fff; font-size: 13px; font-weight: 600; }
+    .phone-header-sub { color: rgba(255,255,255,0.7); font-size: 10px; }
+    .msg { max-width: 85%; margin-bottom: 6px; padding: 6px 10px; border-radius: 12px; font-size: 12px; line-height: 1.4; }
+    .msg-in { background: #fff; border-radius: 0 12px 12px 12px; align-self: flex-start; }
+    .msg-out { background: #dcf8c6; border-radius: 12px 0 12px 12px; margin-right: auto; text-align: right; }
+    .msg-time { font-size: 9px; color: #999; margin-top: 2px; text-align: left; }
+    .phone1 { top: 20px; right: 40px; z-index: 2; }
+    .phone2 { top: 80px; left: 20px; z-index: 1; transform: rotate(-4deg); }
 
     /* SECTION */
-    section { padding: 80px 24px; max-width: 900px; margin: 0 auto; }
-    .section-label {
-      font-size: 13px; font-weight: 700; letter-spacing: 0.08em;
-      color: var(--green); text-transform: uppercase; margin-bottom: 8px;
-    }
-    .section-title {
-      font-size: clamp(26px, 5vw, 38px); font-weight: 800;
-      margin-bottom: 16px; line-height: 1.2;
-    }
-    .section-sub { font-size: 17px; color: var(--muted); max-width: 560px; }
+    section { padding: 80px 40px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-label { font-size: 13px; font-weight: 700; letter-spacing: 0.08em; color: var(--green); text-transform: uppercase; margin-bottom: 8px; }
+    .section-title { font-size: clamp(26px, 4vw, 42px); font-weight: 800; line-height: 1.2; margin-bottom: 16px; }
+    .section-sub { font-size: 17px; color: var(--muted); max-width: 540px; line-height: 1.7; }
 
-    /* HOW IT WORKS */
-    .steps { margin-top: 52px; display: flex; flex-direction: column; gap: 0; }
-    .step {
-      display: flex; gap: 24px; align-items: flex-start;
-      position: relative; padding-bottom: 40px;
+    /* FEATURE ROW */
+    .feature-row {
+      display: flex; align-items: center; gap: 60px;
+      max-width: 1100px; margin: 0 auto;
     }
-    .step:last-child { padding-bottom: 0; }
-    .step-line {
-      position: absolute; right: 19px; top: 44px; bottom: 0;
-      width: 2px; background: var(--green-pale);
-    }
-    .step:last-child .step-line { display: none; }
-    .step-num {
-      flex-shrink: 0; width: 40px; height: 40px;
-      border-radius: 50%; background: var(--green); color: #fff;
-      display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 16px; z-index: 1;
-    }
-    .step-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
-    .step-body p { color: var(--muted); font-size: 15px; }
-    .step-icon { font-size: 22px; margin-bottom: 2px; }
+    .feature-row.reverse { flex-direction: row-reverse; }
+    .feature-text { flex: 1; }
+    .feature-visual { flex: 1; display: flex; justify-content: center; }
+    .feature-phone-wrap { position: relative; height: 440px; width: 260px; }
+    .feature-phone-wrap .phone { position: relative; width: 100%; }
+    section.pale { background: var(--green-pale); }
 
-    /* FEATURES */
-    .features-grid {
-      margin-top: 48px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 20px;
+    /* BENEFITS CARDS */
+    .benefits-wrap {
+      background: var(--green-pale); border-radius: 24px;
+      padding: 40px; max-width: 1100px; margin: 48px auto 0;
     }
-    .feature-card {
-      background: var(--green-pale);
-      border: 1px solid #c5e3d0;
-      border-radius: var(--radius);
-      padding: 24px;
+    .benefits-title { text-align: center; font-size: 22px; font-weight: 800; margin-bottom: 28px; }
+    .benefits-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .benefit-card {
+      background: var(--green); color: #fff;
+      border-radius: var(--radius); padding: 28px 22px;
+      position: relative; overflow: hidden;
     }
-    .feature-icon { font-size: 28px; margin-bottom: 12px; }
-    .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
-    .feature-card p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+    .benefit-card:nth-child(3), .benefit-card:nth-child(4) { background: var(--green-pale2); color: var(--text); }
+    .benefit-num { font-size: 56px; font-weight: 900; opacity: 0.15; position: absolute; top: -8px; left: 12px; line-height: 1; }
+    .benefit-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; position: relative; }
+    .benefit-card p { font-size: 14px; line-height: 1.5; opacity: 0.9; position: relative; }
 
-    /* DIVIDER */
-    .divider { border: none; border-top: 1px solid var(--border); margin: 0 24px; }
+    /* TESTIMONIALS */
+    .testimonials-section { background: var(--green); padding: 80px 40px; }
+    .testimonials-title { text-align: center; font-size: clamp(24px, 4vw, 36px); font-weight: 800; color: #fff; margin-bottom: 40px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; }
+    .testimonial-card { background: #fff; border-radius: var(--radius); padding: 24px; }
+    .testimonial-stars { color: #fbbf24; font-size: 16px; margin-bottom: 10px; }
+    .testimonial-text { font-size: 15px; line-height: 1.6; color: var(--text); margin-bottom: 16px; }
+    .testimonial-author { font-size: 13px; font-weight: 700; color: var(--muted); }
 
-    /* CONTACT */
-    .contact-section {
-      background: var(--green);
-      color: #fff;
-      padding: 64px 24px;
-      text-align: center;
+    /* FINAL CTA */
+    .final-cta-section { padding: 80px 40px; }
+    .final-cta-box {
+      max-width: 700px; margin: 0 auto;
+      background: var(--green-pale); border-radius: 28px;
+      padding: 56px 40px; text-align: center;
     }
-    .contact-section h2 { font-size: 30px; font-weight: 800; margin-bottom: 8px; }
-    .contact-section p { font-size: 17px; opacity: 0.85; margin-bottom: 36px; }
-    .contact-items {
-      display: flex; flex-wrap: wrap; gap: 16px; justify-content: center;
-    }
-    .contact-item {
-      background: rgba(255,255,255,0.15);
-      border: 1px solid rgba(255,255,255,0.3);
-      border-radius: var(--radius);
-      padding: 16px 28px;
-      display: flex; align-items: center; gap: 10px;
-      font-size: 15px; font-weight: 600;
-      transition: background 0.15s;
-    }
-    .contact-item:hover { background: rgba(255,255,255,0.25); }
-    .contact-item .icon { font-size: 20px; }
+    .final-cta-box h2 { font-size: clamp(26px, 4vw, 38px); font-weight: 900; margin-bottom: 12px; }
+    .final-cta-box p { font-size: 17px; color: var(--muted); margin-bottom: 32px; }
 
     /* FOOTER */
-    footer {
-      text-align: center; padding: 24px;
-      font-size: 13px; color: #999;
-      border-top: 1px solid var(--border);
-    }
+    footer { background: var(--green); padding: 48px 40px 32px; color: #fff; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-top { display: flex; gap: 60px; flex-wrap: wrap; margin-bottom: 40px; }
+    .footer-brand { flex: 1.5; min-width: 200px; }
+    .footer-brand-name { font-size: 22px; font-weight: 900; margin-bottom: 8px; }
+    .footer-brand-sub { font-size: 14px; opacity: 0.75; line-height: 1.6; }
+    .footer-col h4 { font-size: 13px; font-weight: 700; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col li { font-size: 14px; opacity: 0.85; }
+    .footer-col li:hover { opacity: 1; }
+    .footer-social { display: flex; gap: 12px; margin-top: 16px; }
+    .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 24px; text-align: center; font-size: 13px; opacity: 0.6; }
 
-    /* WA icon */
-    .wa-icon {
-      width: 20px; height: 20px; flex-shrink: 0;
-      fill: currentColor;
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; padding: 48px 20px 40px; gap: 40px; }
+      .hero-visual { min-height: 320px; width: 100%; }
+      .phone1 { right: 10%; }
+      .phone2 { left: 5%; }
+      .feature-row, .feature-row.reverse { flex-direction: column; gap: 32px; }
+      nav { padding: 0 16px; }
+      .nav-links { display: none; }
+      section { padding: 56px 20px; }
+      .testimonials-section { padding: 56px 20px; }
+      .final-cta-section { padding: 40px 20px; }
+      footer { padding: 40px 20px 24px; }
+      .footer-top { gap: 32px; }
     }
   </style>
 </head>
@@ -192,151 +197,198 @@
 
 <!-- NAV -->
 <nav>
-  <span class="nav-logo">המונה שלי</span>
-  <a class="nav-cta" href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank">
-    הצטרף עכשיו
-  </a>
+  <div class="nav-right">
+    <span class="nav-logo">המונה שלי</span>
+    <ul class="nav-links">
+      <li><a href="#how">איך זה עובד</a></li>
+      <li><a href="#benefits">יתרונות</a></li>
+      <li><a href="#testimonials">מה אומרים</a></li>
+      <li><a href="#contact">יצירת קשר</a></li>
+    </ul>
+  </div>
+  <a class="nav-cta" href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank">הצטרפות</a>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">
-    <span>📱</span> הכל בוואטסאפ — בלי אפליקציה
+  <div class="hero-text">
+    <h1>ניהול מונים<br/><em>שמחובר לוואטסאפ.</em></h1>
+    <p class="hero-slogan"><strong>צלם מונה, החישוב עלי</strong> — השוכר מצלם, הבוט מחשב, בעל הנכס מקבל דוח.</p>
+    <div class="hero-actions">
+      <a class="btn-wa" href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.476a.5.5 0 0 0 .612.612l5.566-1.461A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.013-1.376l-.36-.214-3.724.977.997-3.648-.235-.374A9.773 9.773 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+        התחילו בוואטסאפ
+      </a>
+      <a class="btn-outline" href="#how">איך זה עובד ←</a>
+    </div>
   </div>
-  <h1>המונה <span>שלי</span></h1>
-  <p class="hero-slogan">צלם מונה, החישוב עלי</p>
-  <div class="hero-actions">
-    <a class="btn-primary" href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank">
-      <svg class="wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.476a.5.5 0 0 0 .612.612l5.566-1.461A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.013-1.376l-.36-.214-3.724.977.997-3.648-.235-.374A9.773 9.773 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
-      הצטרף עכשיו
-    </a>
-    <a class="btn-secondary" href="mailto:support@monesheli.co.il">יצירת קשר</a>
-  </div>
-
-  <div class="meter-preview">
-    <img src="meter.jpg" alt="תמונת מונה חשמל" />
+  <div class="hero-visual">
+    <div class="phone phone1">
+      <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+      <div class="phone-screen">
+        <div class="phone-header">
+          <div class="phone-avatar">מ</div>
+          <div><div class="phone-header-name">המונה שלי</div><div class="phone-header-sub">מחובר</div></div>
+        </div>
+        <div class="msg msg-in">שלום! הגיע הזמן לצלם את המונה 📸<br/>אנא שלח תמונה של מונה החשמל.<div class="msg-time">09:00</div></div>
+        <div class="msg msg-out">[תמונת מונה]<div class="msg-time">09:03 ✓✓</div></div>
+        <div class="msg msg-in">קראתי: 1657.40 — האם זה נכון? ✅<div class="msg-time">09:03</div></div>
+        <div class="msg msg-out">כן<div class="msg-time">09:03 ✓✓</div></div>
+        <div class="msg msg-in">✅ הקריאה נשמרה!<br/><br/>⚡ צריכה: 144.70 קוט"ש<br/>💰 סה"כ לתשלום: ₪92.67<div class="msg-time">09:03</div></div>
+      </div>
+    </div>
+    <div class="phone phone2">
+      <div class="phone-notch"><div class="phone-notch-bar"></div></div>
+      <div class="phone-screen">
+        <div class="phone-header">
+          <div class="phone-avatar">מ</div>
+          <div><div class="phone-header-name">המונה שלי</div><div class="phone-header-sub">מחובר</div></div>
+        </div>
+        <div class="msg msg-in">📋 סיכום חיוב — חורשים 4<br/><br/>⚡ חשמל<br/>📅 15/05–25/07<br/>📊 צריכה: 144.70 קוט"ש<br/>✅ סה"כ: ₪92.67<br/><br/>💧 מים<br/>📊 צריכה: 18.70 מ"ק<br/>✅ סה"כ: ₪292.16<div class="msg-time">09:04</div></div>
+        <div class="msg msg-in">📊 דוח מעודכן נשלח ל־your@email.com<div class="msg-time">09:04</div></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- HOW IT WORKS -->
-<section>
-  <div class="section-label">איך זה עובד</div>
-  <h2 class="section-title">מוודסאפ לדוח — בכמה שניות</h2>
-  <p class="section-sub">השוכר שולח תמונה, הבוט מבצע את כל השאר. בעל הנכס מקבל סיכום ודוח מפורט.</p>
+<!-- SECTION: WhatsApp -->
+<section id="how" class="pale">
+  <div class="feature-row">
+    <div class="feature-text">
+      <div class="section-label">בלי אפליקציה</div>
+      <h2 class="section-title">פשוט כמו לשלוח הודעה בוואטסאפ</h2>
+      <p class="section-sub">השוכר מצלם תמונה ושולח. הבוט קורא את המונה, שואל לאישור, ומחשב את החיוב אוטומטית — בלי שבעל הנכס צריך לעשות דבר.</p>
+      <br/>
+      <a class="btn-wa" href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank" style="display:inline-flex;">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.476a.5.5 0 0 0 .612.612l5.566-1.461A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.013-1.376l-.36-.214-3.724.977.997-3.648-.235-.374A9.773 9.773 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+        התחילו עם המונה שלי
+      </a>
+    </div>
+    <div class="feature-visual">
+      <img src="meter.jpg" alt="מונה חשמל" style="width:260px; border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,0.12);" />
+    </div>
+  </div>
+</section>
 
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <div class="step-line"></div>
-      <div class="step-body">
-        <div class="step-icon">📸</div>
-        <h3>השוכר מצלם את המונה</h3>
-        <p>תזכורת אוטומטית נשלחת בוואטסאפ בתחילת כל חודש. השוכר פשוט שולח תמונה.</p>
-      </div>
+<!-- SECTION: Excel Report -->
+<section>
+  <div class="feature-row reverse">
+    <div class="feature-text">
+      <div class="section-label">דוח אקסל אוטומטי</div>
+      <h2 class="section-title">שקיפות מלאה וסדר — תמיד</h2>
+      <p class="section-sub">אחרי כל קריאה בעל הנכס מקבל דוח אקסל מפורט למייל — עם תמונות המונה, פירוט תעריפים, וחישוב מדויק כולל מע"מ. אפשר לפתוח, לערוך ולשמור כרצונך.</p>
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <div class="step-line"></div>
-      <div class="step-body">
-        <div class="step-icon">🤖</div>
-        <h3>קריאה אוטומטית של המונה</h3>
-        <p>הבוט קורא את הקריאה מהתמונה ושואל את השוכר לאשר. אין הקלדה ידנית.</p>
-      </div>
+    <div class="feature-visual">
+      <img src="meter2.png" alt="דוח אקסל" style="width:300px; border-radius:20px; box-shadow:0 20px 50px rgba(0,0,0,0.12);" />
     </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <div class="step-line"></div>
-      <div class="step-body">
-        <div class="step-icon">✅</div>
-        <h3>אישור ודיווח</h3>
-        <p>השוכר מאשר את הקריאה, ובעל הנכס מקבל מיידית סיכום חיוב עם כל הפרטים.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">4</div>
-      <div class="step-line"></div>
-      <div class="step-body">
-        <div class="step-icon">📊</div>
-        <h3>דוח אקסל מפורט במייל</h3>
-        <p>דוח מלא עם היסטוריית קריאות, חישובי חיוב, תמונות המונה — נשלח אוטומטית למייל בעל הנכס.</p>
-      </div>
-    </div>
-    <div class="step">
-      <div class="step-num">5</div>
-      <div class="step-line"></div>
-      <div class="step-body">
-        <div class="step-icon">💰</div>
-        <h3>חישוב חיוב מדויק</h3>
-        <p>כולל תעריפי חשמל מעודכנים, מע"מ, ושינויי מחיר — הכל מחושב אוטומטית.</p>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="section-inner">
+    <div class="benefits-wrap">
+      <div class="benefits-title">יתרונות המונה שלי</div>
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-num">01</div>
+          <h3>בלי טבלאות אקסל ידניות</h3>
+          <p>נגמרו ימי העדכון הידני של קבצי אקסל. הכל מחושב ומתועד אוטומטית.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-num">02</div>
+          <h3>הכל בוואטסאפ</h3>
+          <p>אין אפליקציה להוריד. השוכר ובעל הנכס עובדים מהוואטסאפ שכבר יש להם.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-num">03</div>
+          <h3>שקיפות מלאה וסדר</h3>
+          <p>כל קריאה מתועדת עם תמונה, תאריך וחישוב. בכל עת אפשר לקבל דוח מלא.</p>
+        </div>
+        <div class="benefit-card">
+          <div class="benefit-num">04</div>
+          <h3>תזכורות אוטומטיות</h3>
+          <p>הבוט שולח תזכורת לשוכר בתחילת כל חודש — אפס מאמץ מצד בעל הנכס.</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<hr class="divider" />
-
-<!-- FEATURES -->
-<section>
-  <div class="section-label">יתרונות</div>
-  <h2 class="section-title">למה המונה שלי?</h2>
-
-  <div class="features-grid">
-    <div class="feature-card">
-      <div class="feature-icon">💬</div>
-      <h3>הכל בוואטסאפ</h3>
-      <p>אין אפליקציה להוריד. השוכר ובעל הנכס מנהלים הכל מהוואטסאפ שכבר יש להם.</p>
+<!-- TESTIMONIALS -->
+<section id="testimonials" class="testimonials-section">
+  <h2 class="testimonials-title">מה אומרים עלינו</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">״בעבר הייתי מבלה שעה בתחילת כל חודש על עדכון טבלת אקסל ידנית. היום הבוט עושה הכל — אני רק מקבל את הדוח למייל.״</p>
+      <div class="testimonial-author">דני כ. — בעל 3 נכסים, תל אביב</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">📸</div>
-      <h3>קריאה חכמה מתמונה</h3>
-      <p>הבוט קורא את המונה מהתמונה אוטומטית — השוכר רק מאשר.</p>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">״שקיפות מלאה וסדר — זה מה שאני אוהב. השוכר שולח תמונה, ואני רואה מיד את החיוב המדויק עם כל הפרטים. אין ויכוחים.״</p>
+      <div class="testimonial-author">רחל מ. — בעלת נכס, ירושלים</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">⚡ 💧</div>
-      <h3>חשמל ומים</h3>
-      <p>מעקב אחר שני המונים, כולל חישוב מדויק לפי תעריפים עדכניים.</p>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">״כל מה שרציתי זה שיהיה לי אקסל מסודר בסוף החודש — ועכשיו הוא מגיע אוטומטית למייל. בנוסף אני יכול לפתוח אותו ולעדכן כרצוני.״</p>
+      <div class="testimonial-author">משה ל. — משקיע נדל"ן, חיפה</div>
     </div>
-    <div class="feature-card">
-      <div class="feature-icon">📊</div>
-      <h3>דוח אקסל אוטומטי</h3>
-      <p>דוח מפורט עם תמונות, גרפים, וחישובים — נשלח למייל אחרי כל קריאה.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🔔</div>
-      <h3>תזכורות אוטומטיות</h3>
-      <p>הבוט שולח תזכורת לשוכר בתחילת כל חודש — אפס מאמץ מצד בעל הנכס.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">🏠</div>
-      <h3>מרובה נכסים</h3>
-      <p>ניהול מספר נכסים ושוכרים ממקום אחד, בלי ניירת ובלי טעויות.</p>
+    <div class="testimonial-card">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-text">״הכי טוב — הכל בוואטסאפ. השוכר שלי לא צריך ללמוד שום דבר חדש, הוא פשוט שולח תמונה כמו שהוא שולח כל הודעה.״</p>
+      <div class="testimonial-author">יוסי ב. — בעל 2 נכסים, ראשל"צ</div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<div class="contact-section">
-  <h2>מוכן להתחיל?</h2>
-  <p>הצטרף עכשיו ונהל את המונים שלך בקלות</p>
-  <div class="contact-items">
-    <a class="contact-item" href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank">
-      <span class="icon">💬</span>
-      הצטרף בוואטסאפ
+<!-- FINAL CTA -->
+<section class="final-cta-section" id="contact">
+  <div class="final-cta-box">
+    <h2>מוכנים להתחיל?</h2>
+    <p>הצטרפו עכשיו וחסכו שעות של עבודה ידנית בכל חודש</p>
+    <a class="btn-wa" href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.126 1.535 5.858L.057 23.476a.5.5 0 0 0 .612.612l5.566-1.461A11.945 11.945 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.8 9.8 0 0 1-5.013-1.376l-.36-.214-3.724.977.997-3.648-.235-.374A9.773 9.773 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182c5.43 0 9.818 4.388 9.818 9.818 0 5.43-4.388 9.818-9.818 9.818z"/></svg>
+      הצטרפו בוואטסאפ
     </a>
-    <a class="contact-item" href="mailto:support@monesheli.co.il">
-      <span class="icon">✉️</span>
-      support@monesheli.co.il
-    </a>
-    <a class="contact-item" href="https://wa.me/972552626802" target="_blank">
-      <span class="icon">📞</span>
-      055-262-6802
-    </a>
+    <div style="margin-top:20px; display:flex; gap:24px; justify-content:center; flex-wrap:wrap;">
+      <a href="mailto:support@monesheli.co.il" style="font-size:14px; color:var(--muted);">✉️ support@monesheli.co.il</a>
+      <a href="https://wa.me/972552626802" target="_blank" style="font-size:14px; color:var(--muted);">💬 055-262-6802</a>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  © 2026 המונה שלי · <a href="mailto:support@monesheli.co.il" style="color: var(--green);">support@monesheli.co.il</a>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand-name">המונה שלי</div>
+        <div class="footer-brand-sub">ניהול קריאות מונה חשמל ומים לבעלי נכסים — הכל בוואטסאפ, אוטומטי לגמרי.</div>
+        <div class="footer-social">
+          <a href="mailto:support@monesheli.co.il" title="מייל">✉️</a>
+          <a href="https://wa.me/972552626802" target="_blank" title="וואטסאפ">💬</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>קישורים</h4>
+        <ul>
+          <li><a href="#how">איך זה עובד</a></li>
+          <li><a href="#benefits">יתרונות</a></li>
+          <li><a href="#testimonials">מה אומרים</a></li>
+          <li><a href="https://wa.me/972552626802?text=%D7%94%D7%A6%D7%98%D7%A8%D7%A3" target="_blank">הצטרפות</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>יצירת קשר</h4>
+        <ul>
+          <li>support@monesheli.co.il</li>
+          <li>055-262-6802</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 המונה שלי · כל הזכויות שמורות</div>
+  </div>
 </footer>
 
 </body>
