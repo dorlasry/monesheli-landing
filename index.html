@@ -190,6 +190,22 @@
     .footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.15); display: flex; align-items: center; justify-content: center; font-size: 16px; }
     .footer-bottom { border-top: 1px solid rgba(255,255,255,0.2); padding-top: 24px; text-align: center; font-size: 13px; opacity: 0.6; }
 
+    /* VIDEO SECTION */
+    .video-section { padding: 72px 40px; background: var(--green-pale); }
+    .video-inner { max-width: 860px; margin: 0 auto; text-align: center; }
+    .video-inner .section-label { display: inline-block; margin-bottom: 10px; }
+    .video-inner .section-title { margin-bottom: 12px; }
+    .video-inner .section-sub { margin: 0 auto 36px; text-align: center; }
+    .video-wrap {
+      position: relative; border-radius: 20px; overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.14);
+      background: #000;
+    }
+    .video-wrap video {
+      width: 100%; display: block; border-radius: 20px;
+      max-height: 520px; object-fit: contain;
+    }
+
     @media (max-width: 768px) {
       .hero { flex-direction: column; padding: 48px 20px 40px; gap: 40px; }
       .hero-visual { min-height: 320px; width: 100%; }
@@ -242,6 +258,20 @@
     </div>
   </div>
 </div>
+
+<!-- VIDEO -->
+<section class="video-section">
+  <div class="video-inner">
+    <div class="section-label">הדגמה חיה</div>
+    <h2 class="section-title">ראו איך זה עובד בפועל</h2>
+    <p class="section-sub">תהליך שלם — מצילום המונה ועד קבלת החיוב — בפחות מדקה.</p>
+    <div class="video-wrap">
+      <video controls playsinline preload="metadata" poster="">
+        <source src="demo.mp4" type="video/mp4" />
+      </video>
+    </div>
+  </div>
+</section>
 
 <!-- SECTION: WhatsApp -->
 <section id="how" class="pale">
